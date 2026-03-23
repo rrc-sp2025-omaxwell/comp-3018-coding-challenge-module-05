@@ -1,4 +1,10 @@
 import express, { Express } from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import helmet from "helmet";
+
+dotenv.config();
+
 import {
     accessLogger,
     errorLogger,
@@ -6,11 +12,16 @@ import {
 } from "./api/v1/middleware/logger";
 import errorHandler from "./api/v1/middleware/errorHandler";
 import resourceRouter from "../src/api/v1/routes/resourceRoutes"
+import { getCorsOptions } from "./config/corsConfig";
+import { getHelmetConfig } from "./config/helmetConfig";
 
 /** import the routes **/
 
 
 const app: Express = express();
+
+app.use(getHelmetConfig());
+app.use(cors(getCorsOptions()));
 
 if (process.env.NODE_ENV === "production") {
     app.use(accessLogger);
