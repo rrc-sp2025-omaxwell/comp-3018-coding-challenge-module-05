@@ -16,9 +16,9 @@ export const createResource = async (
             createdAt: new Date().toISOString(),
         };
 
-        const firebaseId = await firestoreRepository.createDocument<Resource>(COLLECTION, newResourceData)
+        await firestoreRepository.createDocument<Resource>(COLLECTION, newResourceData)
         
-        return { firebaseId, ... newResourceData} as Resource;
+        return { ... newResourceData} as Resource;
     } catch (error: unknown) {
         const errorMessage = 
         error instanceof Error? error.message : "Unknown error";

@@ -11,6 +11,7 @@ export const createResourceController = async (
 ): Promise<void> => {
     try {
         const {id, title, type, url, description} = req.body
+
         const newResourceData = {id, title, type, url, description}
 
         const newResource = await resourceService.createResource(newResourceData);
