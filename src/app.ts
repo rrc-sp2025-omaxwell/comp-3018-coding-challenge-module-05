@@ -1,4 +1,5 @@
 import express, { Express } from "express";
+import setupSwagger from "./config/swagger";
 import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
@@ -39,5 +40,8 @@ app.use("/api/v1/resources", resourceRouter)
 
 
 app.use(errorHandler);
+
+// Setup Swagger
+setupSwagger(app);
 
 export default app;
