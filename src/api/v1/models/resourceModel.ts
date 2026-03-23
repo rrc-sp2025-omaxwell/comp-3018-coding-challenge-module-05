@@ -5,4 +5,5 @@ export interface Resource {
     url: string;
     description: string;
     createdAt: string;
+    updatedAt?: string;
 }

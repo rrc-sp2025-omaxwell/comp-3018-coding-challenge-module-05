@@ -55,4 +55,53 @@ export const getResourcesById = async (id: string): Promise<Resource | null> => 
             `Failed to retrieve resource: ${errorMessage}`
         )
     }
-}
+};
+
+// update resource by id
+export const updateResource = async (FirebaseId: string,
+    resourceData: {id: number, content: string
+    }): Promise<Resource | null> => {
+        try{
+            const updateResourceData: Partial<Resource> = {};
+
+            if(resourceData.id != undefined) {
+                updateResourceData.id = resourceData.id;
+            }
+
+            if(resourceData.content != undefined) {
+                resourceData.content = resourceData.content;
+            }
+
+            if(Object.keys(resourceData).length === 0) {
+                throw new Error("no fields provide to updated");
+            }
+
+            updateResourceData.updatedAt = new Date().toISOString();
+
+            await firestoreRepository.updateDocument<Resource>(COLLECTION, FirebaseId, updateResourceData);
+
+            const updatedResource = await firestoreRepository.getDocById<Resource>(COLLECTION, FirebaseId);
+
+            if(!updatedResource) {
+                throw new Error("Resource not found after update");
+            }
+
+            return updatedResource;
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : "Unknown error";
+            throw new Error(`Failed to update resource: ${errorMessage}`);
+        }
+    };
+
+    // delete resource by id
+    export const deleteResource = async (FirebaseId: string): Promise<void> => {
+        try {
+            await firestoreRepository.deleteDocument(COLLECTION, FirebaseId);
+        } catch (error: unknown) {
+            const errorMessage =
+            error instanceof Error? error.message : "Unknown error";
+            throw new Error(
+                `Failed to delete resource: ${errorMessage}`
+            );
+        }
+    };
