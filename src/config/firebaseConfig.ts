@@ -4,7 +4,7 @@ import { getFirestore, Firestore } from "firebase-admin/firestore";
 import { getAuth, Auth } from "firebase-admin/auth";
 
 // update with your own firebase private key .json file path
-import serviceAccountJson from "../../path-to-your-json-file";
+import serviceAccountJson from "../../coding-challenge-05-firebase-adminsdk-fbsvc-757f8076c5.json";
 
 const serviceAccount = serviceAccountJson as unknown as admin.ServiceAccount;
 
